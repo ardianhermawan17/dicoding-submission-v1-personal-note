@@ -5,7 +5,7 @@ import NoteItem from './NoteItem';
 import Jumbotron from '../base/Jumbotron';
 import NullNote from '../base/NullNote';
 
-function NoteList({ notes }) {
+function NoteList({ notes, onRefreshNotes }) {
 	const { t } = useTranslation();
 	function renderNote() {
 		if (notes.length === 0) {
@@ -19,6 +19,7 @@ function NoteList({ notes }) {
 				img={`https://picsum.photos/id/${index}/200/300`}
 				body={note.body}
 				createdAt={note.createdAt}
+				onRefreshNotes={onRefreshNotes}
 			/>
 		));
 	}
@@ -38,6 +39,7 @@ function NoteList({ notes }) {
 NoteList.propTypes = {
 	// eslint-disable-next-line react/forbid-prop-types
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	onRefreshNotes: PropTypes.func.isRequired,
 };
 
 export default NoteList;

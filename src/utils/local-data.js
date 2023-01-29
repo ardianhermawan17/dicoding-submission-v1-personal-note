@@ -75,9 +75,10 @@ function getAllNotes() {
 	return notes;
 }
 
-function getNote(id) {
+function getNote(id, isArchive = false) {
 	const foundedNote = notes.find((note) => note.id === id);
-	return foundedNote;
+	const resultNote = foundedNote.filter((note) => note.archived === isArchive);
+	return resultNote;
 }
 
 function searchNotes(keyword, isArchive = true) {

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-function SearchBar({ keyword, keywordChange }) {
+function SearchBar({ keyword, onChangeKeyword }) {
 	const { t } = useTranslation();
 	return (
-		<div className='max-w-md px-4 mx-auto mt-12'>
+		<div className='max-w-md px-4 mx-auto'>
 			<div className='relative '>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
@@ -26,15 +26,15 @@ function SearchBar({ keyword, keywordChange }) {
 					placeholder={t('Cari berdasarkan judul')}
 					className='w-full py-3 pl-12 pr-4 text-gray-500 dark:text-white border rounded-md outline-none bg-gray-50 dark:bg-black focus:bg-white focus:border-indigo-600'
 					value={keyword}
-					onChange={(event) => keywordChange(event.target.value)}
+					onChange={(event) => onChangeKeyword(event.target.value)}
 				/>
 			</div>
 		</div>
 	);
 }
 
-SearchBar.propType = {
+SearchBar.propTypes = {
 	keyword: PropTypes.string.isRequired,
-	keywordChange: PropTypes.func.isRequired,
+	onChangeKeyword: PropTypes.func.isRequired,
 };
 export default SearchBar;

@@ -5,7 +5,7 @@ import ArchiveNoteItem from './ArchiveNoteItem';
 import Jumbotron from '../base/Jumbotron';
 import NullNote from '../base/NullNote';
 
-function ArchiveNoteList({ notes }) {
+function ArchiveNoteList({ notes, onRefreshNotes }) {
 	const { t } = useTranslation();
 	function renderNote() {
 		if (notes.length === 0) {
@@ -19,6 +19,7 @@ function ArchiveNoteList({ notes }) {
 				img={`https://picsum.photos/id/${index}/200/300`}
 				body={note.body}
 				createdAt={note.createdAt}
+				onRefreshNotes={onRefreshNotes}
 			/>
 		));
 	}
@@ -38,6 +39,7 @@ function ArchiveNoteList({ notes }) {
 ArchiveNoteList.propTypes = {
 	// eslint-disable-next-line react/forbid-prop-types
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	onRefreshNotes: PropTypes.func.isRequired,
 };
 
 export default ArchiveNoteList;

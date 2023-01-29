@@ -1,38 +1,10 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable react/destructuring-assignment */
-import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import noteService from '../../services/note.service';
+import React from 'react';
+import PropTypes from 'prop-types';
 import FormField from '../base/FormField';
 
-function CreateNote() {
-	const [note, setNote] = useState({
-		title: '',
-		body: '',
-	});
-	const navigate = useNavigate();
-
-	function onHandleChange(event, stateType) {
-		setNote((prevState) => ({
-			...prevState,
-			[stateType]: event.target.value,
-		}));
-	}
-
-	async function onSaveNote(event) {
-		event.preventDefault();
-		const response = await noteService.create({
-			title: note.title,
-			body: note.body,
-		});
-		if (response.status !== 201) {
-			toast.error(response.data.message);
-		} else {
-			toast.success(response.data.message);
-			navigate('/');
-		}
-	}
-
+function CreateNote({ title, body, onHandleChange, onSaveNote }) {
 	return (
 		<div className='flex flex-col  items-center justify-around w-full h-auto p-4  bg-primary-600 rounded-xl'>
 			<form
@@ -42,7 +14,7 @@ function CreateNote() {
 				<div className='flex flex-col w-full md:flex-row'>
 					<FormField
 						maxLength={12}
-						value={note.title}
+						value={title}
 						onHandleChange={(event) => onHandleChange(event, 'title')}
 						type='text'
 						name='title'
@@ -51,17 +23,27 @@ function CreateNote() {
 					/>
 				</div>
 				<textarea
-					value={note.body}
+					value={body}
 					onChange={(event) => onHandleChange(event, 'body')}
 					className='p-3 my-3 mx-4 placeholder:font-hand placeholder:text-2xl w-full text-lg bg-gray-50 dark:bg-black  focus:border-indigo-600 text-gray-500 dark:text-white roboto-regular  rounded-lg h-[200px] shadow-lg focus:outline-none'
 					placeholder='Enter your message...'
 				/>
-				<button type='submit' className='p-4 mx-2 rounded-lg bg-blue-400'>
+				<button
+					type='submit'
+					className='p-4 mx-2 rounded-lg bg-indigo-600 text-white'
+				>
 					Send
 				</button>
 			</form>
 		</div>
 	);
 }
+
+CreateNote.propTypes = {
+	title: PropTypes.string.isRequired,
+	body: PropTypes.string.isRequired,
+	onHandleChange: PropTypes.func.isRequired,
+	onSaveNote: PropTypes.func.isRequired,
+};
 
 export default CreateNote;
