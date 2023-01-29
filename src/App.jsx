@@ -1,6 +1,6 @@
 import React from 'react';
 import BaseToaster from './components/base/BaseToaster';
-import AppPage from './pages/class/AppPage';
+import AppPage from './pages/AppPage';
 
 function App() {
 	return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import HomePage from './HomePage';
 import ArchivePage from './ArchivePage';
-import Header from '../../components/Header';
-import { getActiveNotes, getArchivedNotes } from '../../utils/local-data';
+import Header from '../components/Header';
+import { getActiveNotes, getArchivedNotes } from '../utils/local-data';
 import CreatePage from './CreatePage';
 
 class AppPage extends React.Component {

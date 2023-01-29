@@ -1,31 +1,9 @@
-/* eslint-disable react/destructuring-assignment */
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import archiveNoteService from '../services/archiveNote.service';
-import SearchBar from '../components/base/SearchBar';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ArchiveNoteList from '../components/archive/ArchiveNoteList';
 
-function ArchivePage() {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const keywordSearch = searchParams.get('keyword');
-	const [notes, setNotes] = useState([]);
-	const [keyword, setKeyword] = useState(keywordSearch ?? '');
-
-	useEffect(() => {
-		archiveNoteService
-			.getAll()
-			.then((res) => {
-				setNotes(res.data.data);
-			})
-			.catch((err) => console.error(err));
-	}, []);
-
-	function onKeywordChangeHandler(keywordText) {
-		setKeyword(() => keywordText);
-		setSearchParams({ keyword: keywordText });
-	}
-
-	const datas = notes.filter((note) =>
+function ArchivePage({ archive = [], keyword, onRefreshBothNotes }) {
+	const datas = archive.filter((note) =>
 		note.title
 			.toString()
 			.toLowerCase()
@@ -33,14 +11,15 @@ function ArchivePage() {
 	);
 
 	return (
-		<section>
-			<SearchBar
-				keyword={keyword}
-				keywordChange={(value) => onKeywordChangeHandler(value)}
-			/>
-			<ArchiveNoteList notes={datas} />
-		</section>
+		<div>
+			<ArchiveNoteList notes={datas} onRefreshNotes={onRefreshBothNotes} />
+		</div>
 	);
 }
+
+ArchivePage.propTypes = {
+	keyword: PropTypes.string.isRequired,
+	onRefreshBothNotes: PropTypes.func.isRequired,
+};
 
 export default ArchivePage;
